@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Text to Speech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      width: 400px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #667eea;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #5a67d8;
+    }
+
+    audio {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .loading {
+      margin-top: 10px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2> AI Text to Speech</h2>
+
+    <textarea id="textInput" placeholder="Type something here..."></textarea>
+
+    <button onclick="generateAudio()">Generate Voice</button>
+
+    <div class="loading" id="loading"></div>
+
+    <audio id="audioPlayer" controls></audio>
+  </div>
+
+  <script>
+    async function generateAudio() {
+      const text = document.getElementById('textInput').value;
+      const loading = document.getElementById('loading');
+      const audioPlayer = document.getElementById('audioPlayer');
+
+      if (!text) {
+        alert("Please enter some text!");
+        return;
+      }
+
+      loading.innerText = "Generating voice... Please wait ⏳";
+      audioPlayer.src = "";
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/generate-audio/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+
+        if (!response.ok) {
+          throw new Error("Error generating audio");
+        }
+
+        const blob = await response.blob();
+        const audioURL = URL.createObjectURL(blob);
+
+        audioPlayer.src = audioURL;
+        audioPlayer.play();
+
+        loading.innerText = "Voice generated successfully ";
+
+      } catch (error) {
+        loading.innerText = "";
+        alert("Failed: " + error.message);
+      }
+    }
+  </script>
+
+</body>
+</html>
