@@ -17,16 +17,16 @@ A FastAPI-based Text-to-Speech (TTS)  that converts user input text into natural
 
 text/
 │
-├── main.py # FastAPI backend
-├── tts_module.py # TTS processing logic
-├── index.html # Frontend UI
-├── requirements.txt # Dependencies
+├── main.py              # FastAPI backend
+├── tts_module.py        # TTS processing logic
+├── index.html           # Frontend UI
+├── requirements.txt     # Dependencies
 └── README.md
 
 
 ---
 
-## ⚙️ Technologies Used
+## Technologies Used
 
 - **FastAPI** – Backend API
 - **Coqui TTS** – Text-to-Speech model
