@@ -32,7 +32,7 @@ text/
 - **Coqui TTS** – Text-to-Speech model
 - **Uvicorn** – ASGI server
 - **Pydub** – Audio processing
-- **HTML/CSS/JavaScript** – Frontend UI
+- **HTML** – Frontend UI
 
 ---
 
